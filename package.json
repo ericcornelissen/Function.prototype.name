@@ -38,6 +38,7 @@
 	],
 	"dependencies": {
 		"call-bind": "^1.0.8",
+		"call-bound": "^1.0.3",
 		"define-properties": "^1.2.1",
 		"functions-have-names": "^1.2.3",
 		"hasown": "^2.0.2",
