@@ -14,7 +14,23 @@ test('as a function', function (t) {
 		st.end();
 	});
 
-	runTests(callBind(implementation), t);
+	var getName = callBind(implementation);
+
+	t.test('pathological function', function (st) {
+		var func = eval('(function(){' + new Array(100001).join(' ') + '})'); // eslint-disable-line no-eval
+		delete func.name;
+
+		var start = Date.now();
+		var result = getName(func);
+		var elapsed = Date.now() - start;
+
+		st.equal(result, null, 'anonymous function with no name has the name of null');
+		st.ok(elapsed < 250, 'completes in linear time (took ' + elapsed + 'ms)');
+
+		st.end();
+	});
+
+	runTests(getName, t);
 
 	t.end();
 });
