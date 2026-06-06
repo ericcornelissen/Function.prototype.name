@@ -23,7 +23,8 @@ test('as a function', function (t) {
 			['foo', eval('(function foo () {/* named with space */})')],
 			['foo', eval('(function foo() {/* named without space */})')],
 			['', eval('(function () {/* anonymous with space */})')],
-			['', eval('(function() {/* anonymous without space */})')]
+			['', eval('(function() {/* anonymous without space */})')],
+			['', eval('(function() {/* function foo */})')]
 		];
 		/* eslint-enable no-eval */
 
