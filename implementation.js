@@ -44,7 +44,7 @@ module.exports = function getName() {
 	}
 	var str = $functionToString(this);
 	var match = $stringMatch(str, regex);
-	var name = match && match[1];
+	var name = (match && match[1]) || '';
 
 	return /** @type {string} */ (name);
 };
