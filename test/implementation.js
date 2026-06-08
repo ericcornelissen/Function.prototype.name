@@ -5,6 +5,7 @@ var callBind = require('call-bind');
 var test = require('tape');
 var hasStrictMode = require('has-strict-mode')();
 var forEach = require('for-each');
+var mockProperty = require('mock-property');
 var runTests = require('./tests');
 
 test('as a function', function (t) {
@@ -30,16 +31,21 @@ test('as a function', function (t) {
 
 		forEach(functions, function (testCase) {
 			var name = testCase[0];
-			var fn = testCase[1];
-			delete fn.name;
-			st.equal(getName(fn), name, 'function with no name has the name "' + name + '"');
+			var func = testCase[1];
+
+			var restoreName = mockProperty(func, 'name', { 'delete': true });
+			t.teardown(restoreName);
+
+			st.equal(getName(func), name, 'function with no name has the name "' + name + '"');
 		});
 		st.end();
 	});
 
 	t.test('pathological function', function (st) {
 		var func = eval('(function(){' + new Array(100001).join(' ') + '})'); // eslint-disable-line no-eval
-		delete func.name;
+
+		var restoreName = mockProperty(func, 'name', { 'delete': true });
+		t.teardown(restoreName);
 
 		var start = Date.now();
 		var result = getName(func);
@@ -50,6 +56,7 @@ test('as a function', function (t) {
 
 		st.end();
 	});
+
 	runTests(getName, t);
 
 	t.end();
