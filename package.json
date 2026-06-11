@@ -18,7 +18,7 @@
 		"tests-only": "nyc tape 'test/**/*.js'",
 		"prelint": "eclint check $(git ls-files | xargs find 2> /dev/null | grep -vE 'node_modules|\\.git')",
 		"lint": "eslint .",
-		"postlint": "es-shim-api --bound",
+		"postlint": "es-shim-api --bound && tsc -p . && attw -P --ignore-rules named-exports",
 		"version": "auto-changelog && git add CHANGELOG.md",
 		"postversion": "auto-changelog && git add CHANGELOG.md && git commit --no-edit --amend && git tag -f \"v$(node -e \"console.log(require('./package.json').version)\")\""
 	},
@@ -47,8 +47,14 @@
 		"is-callable": "^1.2.7"
 	},
 	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.18.3",
 		"@es-shims/api": "^2.5.1",
 		"@ljharb/eslint-config": "^22.2.3",
+		"@ljharb/tsconfig": "^0.3.2",
+		"@types/call-bind": "^1.0.5",
+		"@types/define-properties": "^1.1.5",
+		"@types/functions-have-names": "^1.2.2",
+		"@types/is-callable": "^1.1.2",
 		"auto-changelog": "^2.6.0",
 		"eclint": "^2.8.1",
 		"eslint": "^10.4.1",
@@ -63,6 +69,7 @@
 		"nyc": "^10.3.2",
 		"safe-publish-latest": "^2.0.0",
 		"tape": "^5.10.0",
+		"typescript": "next",
 		"uglify-register": "^1.0.1"
 	},
 	"testling": {

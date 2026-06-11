@@ -12,6 +12,7 @@ var toStr = callBound('Object.prototype.toString');
 
 var classRegex = /^class /;
 
+/** @param {unknown} fn */
 var isClass = function isClassConstructor(fn) {
 	if (IsCallable(fn)) {
 		return false;
@@ -35,21 +36,24 @@ var ddaClass = '[object HTMLAllCollection]';
 
 var functionProto = Function.prototype;
 
+/** @type {(() => false) | ((value: unknown) => value is HTMLAllCollection)} */
 var isDDA = function isDocumentDotAll() {
-	return false;
+	return /** @type {const} */ (false);
 };
 if (typeof document === 'object') {
 	// Firefox 3 canonicalizes DDA to undefined when it's not accessed directly
 	var all = document.all;
 	if (toStr(all) === toStr(document.all)) {
-		isDDA = function isDocumentDotAll(value) {
+		isDDA = /** @type {(value: unknown) => value is HTMLAllCollection} */ function isDocumentDotAll(value) {
 			/* globals document: false */
 			// in IE 6-8, typeof document.all is "object" and it's truthy
 			if ((isIE68 || !value) && (typeof value === 'undefined' || typeof value === 'object')) {
 				try {
+					// @ts-expect-error nullish will throw
 					var str = toStr(value);
 					// IE 6-8 uses `objectClass`
-					return (str === ddaClass || str === objectClass) && value('') == null; // eslint-disable-line eqeqeq
+					return (str === ddaClass || str === objectClass)
+						&& /** @type {Function} */ (value)('') == null;
 				} catch (e) { /**/ }
 			}
 			return false;
@@ -57,6 +61,7 @@ if (typeof document === 'object') {
 	}
 }
 
+/** @type {import('./implementation')} */
 module.exports = function getName() {
 	if (isDDA(this) || (!isClass(this) && !IsCallable(this))) {
 		throw new $TypeError('Function.prototype.name sham getter called on non-function');
@@ -70,5 +75,6 @@ module.exports = function getName() {
 	var str = $functionToString(this);
 	var match = $stringMatch(str, regex);
 	var name = match && match[1];
-	return name;
+
+	return /** @type {string} */ (name);
 };

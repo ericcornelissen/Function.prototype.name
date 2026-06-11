@@ -15,4 +15,5 @@ define(bound, {
 	shim: shim
 });
 
+/** @type {import('.')} */
 module.exports = bound;
