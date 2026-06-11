@@ -26,7 +26,7 @@ var isClass = function isClassConstructor(fn) {
 
 var regex = /\s*function\s+([^(\s]*)\s*/;
 
-var isIE68 = !(0 in [,]); // eslint-disable-line no-sparse-arrays, comma-spacing
+var isIE68 = !(0 in [,]); // eslint-disable-line no-sparse-arrays
 
 var objectClass = '[object Object]';
 var ddaClass = '[object HTMLAllCollection]';
