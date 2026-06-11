@@ -37,11 +37,11 @@
 		"es-shim API"
 	],
 	"dependencies": {
-		"call-bind": "^1.0.8",
-		"call-bound": "^1.0.3",
+		"call-bind": "^1.0.9",
+		"call-bound": "^1.0.4",
 		"define-properties": "^1.2.1",
 		"functions-have-names": "^1.2.3",
-		"hasown": "^2.0.2",
+		"hasown": "^2.0.4",
 		"is-callable": "^1.2.7"
 	},
 	"devDependencies": {
