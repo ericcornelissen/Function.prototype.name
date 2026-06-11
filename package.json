@@ -44,7 +44,8 @@
 		"functions-have-names": "^1.2.3",
 		"has-property-descriptors": "^1.0.2",
 		"hasown": "^2.0.4",
-		"is-callable": "^1.2.7"
+		"is-callable": "^1.2.7",
+		"is-document.all": "^1.0.0"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "^0.18.3",
