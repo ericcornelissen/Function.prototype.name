@@ -3,7 +3,9 @@
 var IsCallable = require('is-callable');
 var hasOwn = require('hasown');
 var functionsHaveNames = require('functions-have-names')();
+var $TypeError = require('es-errors/type');
 var callBound = require('call-bound');
+
 var $functionToString = callBound('Function.prototype.toString');
 var $stringMatch = callBound('String.prototype.match');
 var toStr = callBound('Object.prototype.toString');
@@ -57,7 +59,7 @@ if (typeof document === 'object') {
 
 module.exports = function getName() {
 	if (isDDA(this) || (!isClass(this) && !IsCallable(this))) {
-		throw new TypeError('Function.prototype.name sham getter called on non-function');
+		throw new $TypeError('Function.prototype.name sham getter called on non-function');
 	}
 	if (functionsHaveNames && hasOwn(this, 'name')) {
 		return this.name;

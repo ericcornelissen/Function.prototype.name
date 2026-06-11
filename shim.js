@@ -2,9 +2,10 @@
 
 var supportsDescriptors = require('define-properties').supportsDescriptors;
 var functionsHaveNames = require('functions-have-names')();
+var $TypeError = require('es-errors/type');
+
 var getPolyfill = require('./polyfill');
-var defineProperty = Object.defineProperty;
-var TypeErr = TypeError;
+var defineProperty = require('es-define-property');
 
 module.exports = function shimName() {
 	var polyfill = getPolyfill();
@@ -12,7 +13,7 @@ module.exports = function shimName() {
 		return polyfill;
 	}
 	if (!supportsDescriptors) {
-		throw new TypeErr('Shimming Function.prototype.name support requires ES5 property descriptor support.');
+		throw new $TypeError('Shimming Function.prototype.name support requires ES5 property descriptor support.');
 	}
 	var functionProto = Function.prototype;
 	defineProperty(functionProto, 'name', {
