@@ -1,6 +1,6 @@
 'use strict';
 
-var supportsDescriptors = require('define-properties').supportsDescriptors;
+var supportsDescriptors = require('has-property-descriptors')();
 var functionsHaveNames = require('functions-have-names')();
 var $TypeError = require('es-errors/type');
 
