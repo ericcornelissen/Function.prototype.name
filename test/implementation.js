@@ -41,19 +41,15 @@ test('as a function', function (t) {
 		st.end();
 	});
 
-	t.test('pathological function', function (st) {
+	t.test('pathological function', { ignoreSyncTimeout: false }, function (st) {
 		var func = eval('(function(){' + new Array(100001).join(' ') + '})'); // eslint-disable-line no-eval
 
 		var restoreName = mockProperty(func, 'name', { 'delete': true });
-		t.teardown(restoreName);
+		st.teardown(restoreName);
 
-		var start = Date.now();
+		st.timeoutAfter(250);
 		var result = getName(func);
-		var elapsed = Date.now() - start;
-
 		st.equal(result, '', 'function with no name has the name ""');
-		st.ok(elapsed < 250, 'completes in linear time (took ' + elapsed + 'ms)');
-
 		st.end();
 	});
 
